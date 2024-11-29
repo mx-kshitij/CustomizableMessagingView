@@ -1,0 +1,12 @@
+{
+  "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "jsx": "react",
+        "module": "esnext",
+        "target": "es6",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src", "./typings"]
+}

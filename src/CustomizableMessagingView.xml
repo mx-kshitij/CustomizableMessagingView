@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="mendix.customizablemessagingview.CustomizableMessagingView" pluginWidget="true" needsEntityContext="true" offlineCapable="true" supportedPlatform="Native"
+    xmlns="http://www.mendix.com/widget/1.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Customizable Messaging View</name>
+    <description>My widget description</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="Data">
+            <property key="data" type="datasource" isList="true" required="true">
+                <caption>Data source</caption>
+                <description />
+            </property>
+            <property key="content" type="widgets" required="false" dataSource="data">
+                <caption>Message content</caption>
+                <description>
+                </description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Scroll to bottom">
+            <property key="showSTB" type="boolean" defaultValue="true">
+                <caption>Show button</caption>
+                <description />
+            </property>
+            <property key="colorSTB" type="string" defaultValue="#26ed86">
+                <caption>Color</caption>
+                <description />
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Paging">
+            <property key="pageSize" type="integer" defaultValue="50">
+                <caption>Page size</caption>
+                <description />
+            </property>
+            <property key="pageEndAction" type="action">
+                <caption>On page end reached</caption>
+                <description>Action to be performed when page end is reached</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Bottom bar">
+            <property key="showBottomBar" type="boolean" defaultValue="true">
+                <caption>Show bottom bar</caption>
+                <description />
+            </property>
+            <property key="attribute" type="attribute" required="false" onChange="onChangeAction">
+                <caption>Attribute</caption>
+                <description />
+                <attributeTypes>
+                    <attributeType name="String" />
+                </attributeTypes>
+            </property>
+            <property key="bottomBarVisibility" type="expression" defaultValue="true">
+                <caption>Visibility</caption>
+                <description />
+                <returnType type="Boolean" />
+            </property>
+            <property key="placeholder" type="textTemplate">
+                <caption>Textbox placeholder</caption>
+                <description />
+            </property>
+            <property key="placeholderTextColor" type="textTemplate" required="false">
+                <caption>Placeholder text color</caption>
+                <description />
+            </property>
+            <property key="onChangeAction" type="action">
+                <caption>On key press</caption>
+                <description />
+            </property>
+            <property key="sendButtonAction" type="action" required="false">
+                <caption>Action</caption>
+                <description>Send button action</description>
+            </property>
+            <property key="mediaButtonAction" type="action" required="false">
+                <caption>Media action</caption>
+                <description>Media button action</description>
+            </property>
+            <property key="bottomBarBGC" type="string" defaultValue="#FFFFFF">
+                <caption>Background color</caption>
+                <description />
+            </property>
+            <property key="inputMaxHeight" type="integer" defaultValue="100">
+                <caption>Input max height</caption>
+                <description></description>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>

@@ -1,0 +1,53 @@
+{
+  "name": "customizablemessagingview",
+  "widgetName": "CustomizableMessagingView",
+  "version": "1.0.0",
+  "description": "My widget description",
+  "copyright": "© Mendix Technology BV 2022. All rights reserved.",
+  "author": "Kshitij Karandikar",
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "Apache-2.0",
+  "config": {
+    "projectPath": "./tests/testProject"
+  },
+  "packagePath": "mendix",
+  "scripts": {
+    "start": "pluggable-widgets-tools start:native",
+    "build": "pluggable-widgets-tools build:native",
+    "lint": "pluggable-widgets-tools lint",
+    "lint:fix": "pluggable-widgets-tools lint:fix",
+    "prerelease": "npm run lint",
+    "release": "pluggable-widgets-tools release:native"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@mendix/pluggable-widgets-tools": "^9.24.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/big.js": "^6.0.2",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-native": "0.70.7",
+    "@types/react": "18.3.12",
+    "react-dom": "18.2.0",
+    "@types/react-dom": "18.0.0",
+    "@types/react-native": "0.70.0"
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.70.7",
+    "@types/react": "18.0.0",
+    "@types/react-dom": "18.0.0",
+    "@types/react-native": "0.70.0"
+  }
+}
