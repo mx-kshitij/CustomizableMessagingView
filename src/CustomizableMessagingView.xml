@@ -42,7 +42,7 @@
                 <caption>Show bottom bar</caption>
                 <description />
             </property>
-            <property key="attribute" type="attribute" required="false" onChange="onChangeAction">
+            <property key="attribute" type="attribute" required="false">
                 <caption>Attribute</caption>
                 <description />
                 <attributeTypes>
@@ -62,9 +62,13 @@
                 <caption>Placeholder text color</caption>
                 <description />
             </property>
-            <property key="onChangeAction" type="action">
+            <property key="onChangeAction" type="action" required="false">
                 <caption>On key press</caption>
                 <description />
+            </property>
+            <property key="keyPressTimeout" type="integer" defaultValue="300">
+                <caption>Key press timeout</caption>
+                <description>The timeout between keypress and action trigger</description>
             </property>
             <property key="sendButtonAction" type="action" required="false">
                 <caption>Action</caption>
@@ -80,6 +84,10 @@
             </property>
             <property key="inputMaxHeight" type="integer" defaultValue="100">
                 <caption>Input max height</caption>
+                <description></description>
+            </property>
+            <property key="textMaxLength" type="integer" defaultValue="750">
+                <caption>Max text length</caption>
                 <description></description>
             </property>
         </propertyGroup>

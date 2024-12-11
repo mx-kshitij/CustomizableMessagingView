@@ -20,10 +20,13 @@ export interface CustomizableMessagingViewProps<Style> {
     bottomBarVisibility: DynamicValue<boolean>;
     placeholder: DynamicValue<string>;
     placeholderTextColor?: DynamicValue<string>;
+    onChangeAction?: ActionValue;
+    keyPressTimeout: number;
     sendButtonAction?: ActionValue;
     mediaButtonAction?: ActionValue;
     bottomBarBGC: string;
     inputMaxHeight: number;
+    textMaxLength: number;
 }
 
 export interface CustomizableMessagingViewPreviewProps {
@@ -47,8 +50,10 @@ export interface CustomizableMessagingViewPreviewProps {
     placeholder: string;
     placeholderTextColor: string;
     onChangeAction: {} | null;
+    keyPressTimeout: number | null;
     sendButtonAction: {} | null;
     mediaButtonAction: {} | null;
     bottomBarBGC: string;
     inputMaxHeight: number | null;
+    textMaxLength: number | null;
 }

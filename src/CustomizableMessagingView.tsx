@@ -1,4 +1,4 @@
-import { createElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { createElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, FlatList, Image, NativeSyntheticEvent, Pressable, StyleSheet, TextInput, TextInputContentSizeChangeEventData, TextStyle, View, ViewStyle } from "react-native";
 import { mergeNativeStyles, Style } from "@mendix/pluggable-widgets-tools";
 // import { HelloWorld } from "./components/HelloWorld";
@@ -47,7 +47,10 @@ export const CustomizableMessagingView = ({
     bottomBarVisibility,
     bottomBarBGC,
     mediaButtonAction,
-    inputMaxHeight
+    inputMaxHeight,
+    onChangeAction,
+    keyPressTimeout = 200,
+    textMaxLength = 750
 }: CustomizableMessagingViewProps<CustomStyle>): ReactNode => {
     if (data === undefined || data.status != "available" || (showBottomBar && attribute === undefined) || (showBottomBar && bottomBarVisibility.status != ValueStatus.Available)) {
         return null;
@@ -69,11 +72,13 @@ export const CustomizableMessagingView = ({
     const [value, setValue] = useState(attribute?.displayValue);
     const [isButtonPressed, SetIsButtonPressed] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
+    const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
     let outerContainerRef = useRef(null);
     let flatListRef = useRef(null);
     let msgTextBox = useRef(null);
     let bottomBarOuterContainerRef = useRef(null);
+    let textSyncTimeout = keyPressTimeout;
 
     if (runCount === 1) {
         setRecordCount(pageSize);
@@ -95,13 +100,32 @@ export const CustomizableMessagingView = ({
         attribute?.displayValue === '' ? setIsEnabled(false) : setIsEnabled(true);
     }, [attribute]);
 
+    const syncValueWithAttribute = useCallback(
+        (newValue: string) => {
+            if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+            debounceTimeout.current = setTimeout(() => {
+                attribute?.setTextValue(newValue);
+                if(onChangeAction?.canExecute && !onChangeAction.isExecuting){
+                    onChangeAction.execute();
+                }
+                setIsEnabled(newValue.trim().length > 0);
+            }, textSyncTimeout);
+        },
+        [attribute]
+    );
 
     // Updates attribute value with user key press & enables send button if not empty
     const onValueChange = (newValue: any) => {
         setValue(newValue);
-        attribute?.setTextValue(newValue);
-        attribute?.displayValue === '' ? setIsEnabled(false) : setIsEnabled(true);
+        syncValueWithAttribute(newValue);
     };
+    // const onValueChange = useMemo(() => {
+    //     return debounce((newValue: string) => {
+    //         setValue(newValue);
+    //         attribute?.setTextValue(newValue);
+    //         setIsEnabled(newValue.trim().length > 0);
+    //     }, 200);
+    // }, [attribute]);
 
     // Triggers send action nanoflow if enabled and available
     const runOnSend = () => {
@@ -131,27 +155,21 @@ export const CustomizableMessagingView = ({
     );
 
     // Function to trigger getting next set of data
-    const onPageEndReached = () => {
+    const onPageEndReached = useCallback(() => {
         setRecordCount(runCount * pageSize);
         setRunCount(runCount + 1);
         if (pageEndAction?.canExecute) {
             pageEndAction.execute();
         }
-    };
+    },[pageEndAction, pageSize]);
 
-    const onContentSizeChange = (event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
+    const onContentSizeChange = useCallback((event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
         let h = event.nativeEvent.contentSize.height;
         setInputHeight(h > inputMaxHeight ? inputMaxHeight : h);
-        //@ts-ignore
-        // outerContainerRef?.current?.setNativeProps({
-        //     style: {
-        //         height: flatlistHeight - inputHeight
-        //     }
-        // });
-    }
+    }, [value])
 
     // Function to render the bottom bar
-    const renderBottomBar = () => {
+    const renderBottomBar = useMemo(() => {
         if (showBottomBar && bottomBarVisibility.value) {
             return (
                 <View style={[mergedStyles.bottomBarOuterContainer, { height: Math.max(55, inputHeight + 15) }]} ref={bottomBarOuterContainerRef}>
@@ -178,6 +196,7 @@ export const CustomizableMessagingView = ({
                             onValueChange(value);
                         }}
                         ref={msgTextBox}
+                        maxLength={textMaxLength}
                     />
                     <Pressable
                         style={isEnabled ? (isButtonPressed ? mergedStyles.btnContainerPressed : mergedStyles.btnContainer) : mergedStyles.btnContainerDisabled}
@@ -192,7 +211,7 @@ export const CustomizableMessagingView = ({
         } else {
             return null;
         }
-    };
+    },[showBottomBar, bottomBarVisibility, inputHeight, value]);
 
     // Function to render the button to scroll to the latest message
     const renderScrollToBottomButton = () => {
@@ -274,7 +293,7 @@ export const CustomizableMessagingView = ({
     return (
         <View style={mergedStyles.container}>
             {renderMessageList()}
-            {renderBottomBar()}
+            {renderBottomBar}
             {renderScrollToBottomButton()}
         </View>
     );
