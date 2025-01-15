@@ -4,7 +4,7 @@
  * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import { ActionValue, DynamicValue, EditableValue, ListValue, ListWidgetValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue, ListValue, NativeImage, ListWidgetValue } from "mendix";
 
 export interface CustomizableMessagingViewProps<Style> {
     name: string;
@@ -15,6 +15,7 @@ export interface CustomizableMessagingViewProps<Style> {
     colorSTB: string;
     pageSize: number;
     pageEndAction?: ActionValue;
+    scrollToBottomBtn: DynamicValue<NativeImage>;
     showBottomBar: boolean;
     attribute?: EditableValue<string>;
     bottomBarVisibility: DynamicValue<boolean>;
@@ -27,6 +28,8 @@ export interface CustomizableMessagingViewProps<Style> {
     bottomBarBGC: string;
     inputMaxHeight: number;
     textMaxLength: number;
+    mediaBtnIcon: DynamicValue<NativeImage>;
+    sendIcon: DynamicValue<NativeImage>;
 }
 
 export interface CustomizableMessagingViewPreviewProps {
@@ -44,6 +47,7 @@ export interface CustomizableMessagingViewPreviewProps {
     colorSTB: string;
     pageSize: number | null;
     pageEndAction: {} | null;
+    scrollToBottomBtn: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
     showBottomBar: boolean;
     attribute: string;
     bottomBarVisibility: string;
@@ -56,4 +60,6 @@ export interface CustomizableMessagingViewPreviewProps {
     bottomBarBGC: string;
     inputMaxHeight: number | null;
     textMaxLength: number | null;
+    mediaBtnIcon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    sendIcon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
 }

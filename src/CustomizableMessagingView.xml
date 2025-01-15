@@ -36,6 +36,10 @@
                 <caption>On page end reached</caption>
                 <description>Action to be performed when page end is reached</description>
             </property>
+            <property key="scrollToBottomBtn" type="image" required="true">
+                <caption>Scroll to bottom image</caption>
+                <description>The image to use for the scroll to bottom part.</description>
+            </property>
         </propertyGroup>
         <propertyGroup caption="Bottom bar">
             <property key="showBottomBar" type="boolean" defaultValue="true">
@@ -89,6 +93,14 @@
             <property key="textMaxLength" type="integer" defaultValue="750">
                 <caption>Max text length</caption>
                 <description></description>
+            </property>
+            <property key="mediaBtnIcon" type="image" required="true">
+                <caption>Media button</caption>
+                <description>The icon to be used for the button to add media.</description>
+            </property>
+            <property key="sendIcon" type="image" required="true">
+                <caption>Send button</caption>
+                <description>The icon to be used for the button to send the message.</description>
             </property>
         </propertyGroup>
     </properties>
